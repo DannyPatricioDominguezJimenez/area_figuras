@@ -1,11 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Area de Figuras</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Áreas: Cuadrado, Rectángulo y Triángulo</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      margin: 0;
+      padding: 50px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+      gap: 2rem;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      max-width: 1200px;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .section {
+      background: #f9f9f9;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      flex: 1 1 300px;
+      max-width: 350px;
+      min-width: 280px;
+    }
+    h2 {
+      color: #0072ff;
+      margin-bottom: 1rem;
+    }
+    input[type="number"] {
+      padding: 10px;
+      width: 40%;
+      margin: 0.5rem 0.5rem 0.5rem 0;
+      border: 2px solid #0072ff;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+    input[type="number"]:focus {
+      border-color: #00c6ff;
+      outline: none;
+    }
+    button {
+      margin-top: 0.5rem;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #0072ff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #005fcc;
+    }
+    .resultado {
+      margin-top: 1.2rem;
+      font-size: 1.05rem;
+      color: #333;
+    }
+    canvas {
+      margin-top: 1.5rem;
+      border: 2px dashed #0072ff;
+      background-color: #f2f9ff;
+      border-radius: 10px;
+    }
+
+    /* Responsive para pantallas pequeñas */
+    @media (max-width: 1000px) {
+      .container {
+        justify-content: center;
+      }
+      .section {
+        max-width: 90%;
+        flex: 1 1 90%;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <!-- Cuadrado -->
+    <div class="section">
+      <h2>Cuadrado</h2>
+      <input type="number" id="lado" placeholder="Lado" min="0" />
+      <br />
+      <button onclick="calcularAreaCuadrado()">Calcular Área</button>
+      <div class="resultado" id="resultadoCuadrado"></div>
+      <canvas id="canvasCuadrado" width="300" height="300"></canvas>
+    </div>
+
     
+  </div>
+
+  <script>
+    function calcularAreaCuadrado() {
+      const lado = parseFloat(document.getElementById("lado").value);
+      const resultado = document.getElementById("resultadoCuadrado");
+      const ctx = document.getElementById("canvasCuadrado").getContext("2d");
+      ctx.clearRect(0, 0, 300, 300);
+      resultado.innerHTML = "";
+
+      if (isNaN(lado) || lado <= 0) {
+        resultado.innerHTML = "⚠️ Ingresa un número válido y positivo.";
+        return;
+      }
+
+      const area = lado * lado;
+      resultado.innerHTML = `
+        <p><strong>Proceso:</strong></p>
+        <p>Área = lado × lado</p>
+        <p>Área = ${lado} × ${lado} = <strong>${area.toFixed(2)}</strong> unidades²</p>
+      `;
+
+      const escala = 250 / Math.max(lado, 1);
+      const ladoEscalado = lado * escala;
+      const offset = (300 - ladoEscalado) / 2;
+
+      ctx.fillStyle = "#00c6ff88";
+      ctx.strokeStyle = "#0072ff";
+      ctx.lineWidth = 2;
+      ctx.fillRect(offset, offset, ladoEscalado, ladoEscalado);
+      ctx.strokeRect(offset, offset, ladoEscalado, ladoEscalado);
+    }
+
+    
+  </script>
 </body>
 </html>
