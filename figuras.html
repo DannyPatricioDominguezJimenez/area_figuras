@@ -103,7 +103,17 @@
       <div class="resultado" id="resultadoCuadrado"></div>
       <canvas id="canvasCuadrado" width="300" height="300"></canvas>
     </div>
-<!-- Aprovado para subir a main -->
+
+    <!-- Rectángulo -->
+    <div class="section">
+      <h2>Rectángulo</h2>
+      <input type="number" id="baseRect" placeholder="Base" min="0" />
+      <input type="number" id="alturaRect" placeholder="Altura" min="0" />
+      <br />
+      <button onclick="calcularAreaRectangulo()">Calcular Área</button>
+      <div class="resultado" id="resultadoRectangulo"></div>
+      <canvas id="canvasRectangulo" width="300" height="300"></canvas>
+    </div>
     
   </div>
 
@@ -136,6 +146,39 @@
       ctx.lineWidth = 2;
       ctx.fillRect(offset, offset, ladoEscalado, ladoEscalado);
       ctx.strokeRect(offset, offset, ladoEscalado, ladoEscalado);
+    }
+
+    function calcularAreaRectangulo() {
+      const base = parseFloat(document.getElementById("baseRect").value);
+      const altura = parseFloat(document.getElementById("alturaRect").value);
+      const resultado = document.getElementById("resultadoRectangulo");
+      const ctx = document.getElementById("canvasRectangulo").getContext("2d");
+      ctx.clearRect(0, 0, 300, 300);
+      resultado.innerHTML = "";
+
+      if (isNaN(base) || isNaN(altura) || base <= 0 || altura <= 0) {
+        resultado.innerHTML = "⚠️ Ingresa base y altura válidas y positivas.";
+        return;
+      }
+
+      const area = base * altura;
+      resultado.innerHTML = `
+        <p><strong>Proceso:</strong></p>
+        <p>Área = base × altura</p>
+        <p>Área = ${base} × ${altura} = <strong>${area.toFixed(2)}</strong> unidades²</p>
+      `;
+
+      const escala = 250 / Math.max(base, altura);
+      const baseEsc = base * escala;
+      const altEsc = altura * escala;
+      const x = (300 - baseEsc) / 2;
+      const y = (300 - altEsc) / 2;
+
+      ctx.fillStyle = "#ffc10788";
+      ctx.strokeStyle = "#ff9800";
+      ctx.lineWidth = 2;
+      ctx.fillRect(x, y, baseEsc, altEsc);
+      ctx.strokeRect(x, y, baseEsc, altEsc);
     }
 
     
